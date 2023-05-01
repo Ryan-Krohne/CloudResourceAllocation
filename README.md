@@ -8,6 +8,8 @@ AWS Cloud Resource Allocation is a Java program designed to help users allocate 
 ## Java Concepts Used
 
 Object-Oriented Programming: The project is designed with an object-oriented approach, where each class represents a real-world entity and encapsulates data and behaviors associated with that entity.
+
+
 Inheritance: The Resource class is a parent class to Cloud, Virtual Servers, and Machine Learning subclasses. The subclasses inherit attributes and behaviors from the parent class.
 Polymorphism: The parent class has a toString's which is overridden differently by each subclass. The subclass calls the parent's toString, and then provides additional information not found in the parent class. This allows the subclass's toString to provide all the default information, aswell as anything additional depending on it's specifics.
 Encapsulation: Each class encapsulates its data and behaviors, and provides public methods for accessing and modifying that data.
