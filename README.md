@@ -4,6 +4,19 @@ Project Name: AWS Cloud Resource Allocation
 
 AWS Cloud Resource Allocation is a Java program designed to help users allocate cloud resources on AWS. Users can create an account, view discounts, add resources, remove resources, view their cart, and checkout. The program is designed with modularity in mind, making it easy to maintain and extend.
 
+Java Concepts Used
+
+Object-Oriented Programming: The project is designed with an object-oriented approach, where each class represents a real-world entity and encapsulates data and behaviors associated with that entity.
+Inheritance: The Animal class is a parent class to the Dog and Cat subclasses. The subclasses inherit attributes and behaviors from the parent class.
+Polymorphism: The Animal class has a speak() method that is overridden by the Dog and Cat subclasses. This allows the speak() method to behave differently depending on the type of animal.
+Encapsulation: Each class encapsulates its data and behaviors, and provides public methods for accessing and modifying that data.
+Aggregation: The Zoo class aggregates instances of the Animal class to create a collection of animals that can be managed collectively.
+Exception Handling: The program uses try-catch blocks to handle exceptions that may occur during user input or other operations.
+Constants: The Zoo class defines constants for the maximum number of animals that can be added to the zoo, as well as the cost of admission.
+
+
+
+
 
 
 Getting Started
