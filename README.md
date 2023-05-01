@@ -1,4 +1,4 @@
-# CloudResourceAllocation
+## CloudResourceAllocation
 
 Project Name: AWS Cloud Resource Allocation
 
@@ -17,7 +17,7 @@ Constants: The main class defines constants for the maximum number of Resources 
 
 
 
-Getting Started
+## Getting Started
 
 To get started with AWS Cloud Resource Allocation, you will need to have Java installed on your computer. You can download Java from the official website at https://www.java.com/en/download/. Once you have Java installed, you can download the source code for AWS Cloud Resource Allocation from the GitHub repository at https://github.com/your-username/aws-cloud-resource-allocation.
 
