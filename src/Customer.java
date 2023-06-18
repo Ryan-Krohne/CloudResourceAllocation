@@ -31,11 +31,17 @@ public class Customer {
     public String getPassword() {
         return password;
     }
+   
+   
+   
+   
     public void setPassword(String password) {
         boolean isDigit = false;
         boolean isUpper = false;
         boolean isLower = false;
         boolean specialChar = false;
+
+
         if(password.length()<8 || password.length()>16){
             throw new IllegalArgumentException("Password must be between 8-16 characters.");
         }
@@ -69,6 +75,10 @@ public class Customer {
             throw new IllegalArgumentException("Password must have at least 1 special character.");
         }
     }
+
+
+
+
     public String getEmail() {
         return email;
     }
@@ -78,7 +88,7 @@ public class Customer {
             throw new IllegalArgumentException("email cannot be empty.");
         }
         if(!email.matches(pattern)){
-            throw new IllegalArgumentException("Please include your full email address");
+            throw new IllegalArgumentException("Please include your full email address.\n\n Example: rkrohne@gmail.com");
         } 
         this.email = email;
     }
