@@ -1,5 +1,5 @@
 public class MachineLearning extends Resource{
-    private int mlDuration; //options would be build, train, deploy, other
+    private int mlDuration;
 
     public int getMlDuration() {
         return mlDuration;
@@ -10,10 +10,10 @@ public class MachineLearning extends Resource{
     }
     
     public double calculateFees() {
-        return 0;
+        return getPrice();
     }
 
-    public double savings() {
+    public double savings() { //no discounts available atm
         return 0;
     }
 
@@ -22,4 +22,7 @@ public class MachineLearning extends Resource{
             setMlDuration(mlDuration);
     }
 
+    public String toString() {
+        return super.toString()+"    "+getMlDuration()+" months";
+    }
 }
