@@ -15,10 +15,15 @@ public class VirtualServers extends Resource {
     }
 
     public double calculateFees() {
+        return getPrice();
+    }
+
+    public double savings() { // no discounts available atm
         return 0;
     }
 
-    public double savings() {
-        return 0;
-    }   
+    public String toString() {
+        return super.toString()+"    "+getNumOfServers()+" servers";
+    }
+    
 }
