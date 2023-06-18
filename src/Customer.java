@@ -2,6 +2,7 @@ import java.util.Arrays;
 
 public class Customer {
     
+
     String fullName;
     String password;
     String email;
@@ -20,8 +21,11 @@ public class Customer {
             if(Character.isLetter(fullName.charAt(i))){
                 count ++;
             }
+            else if(Character.isSpaceChar(fullName.charAt(i))){
+                count ++;
+            }
         }
-        if(count > 0) this.fullName = fullName;
+        if(count == fullName.length()) this.fullName = fullName;
         else {throw new IllegalArgumentException("Name must be only letters");}
     }
     public String getPassword() {
@@ -74,15 +78,9 @@ public class Customer {
             throw new IllegalArgumentException("email cannot be empty.");
         }
         if(!email.matches(pattern)){
-            throw new IllegalArgumentException("invalid email");
+            throw new IllegalArgumentException("Please include your full email address");
         } 
         this.email = email;
-    }
-    public String getAddress() {
-        return address;
-    }
-    public void setAddress(String address) {
-        this.address = address;
     }
     public Resource[] getResources() {
         return resources;
@@ -92,19 +90,25 @@ public class Customer {
     }
 
     
-    public Customer(String fullName, String password, String email, String address,
+    public Customer(String fullName, String password, String email,
             Resource[] resources) {
         this.fullName = fullName;
         this.password = password;
         this.email = email;
-        this.address = address;
         this.resources = resources;
     }
 
+    public double getSubtotal(Resource resources[]){
+        double subtotal =0;
+        for (int i=0;i<Resource.getNumResources();i++){
+            subtotal+=resources[i].calculateFees();
+        }
+        return subtotal;
+    }
     
     public String toString() {
         return "Customer [fullName=" + fullName + ", password=" + password + ", email="
-                + email + ", address=" + address +", resources="
+                + email+", resources="
                 + Arrays.toString(resources) + "]";
     }
 }
