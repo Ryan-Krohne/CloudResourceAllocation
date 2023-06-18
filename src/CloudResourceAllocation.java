@@ -1,24 +1,30 @@
 import javax.swing.JOptionPane;
 
 public class CloudResourceAllocation {
+
+    static double storagePrice=0.5;
     public static void main(String[] args) {
 
         final int maxResources = 10;
         Resource allResources[] = new Resource[maxResources];
-        Customer Customer1 = new Customer(null, null, null, null, allResources);
+        Customer Customer1 = new Customer(null, null, null, allResources);
         registration(Customer1);
         int choice=0;
 
         do{   
             try{
-                choice = Integer.parseInt(JOptionPane.showInputDialog(null, "**AWS Cloud Resources**\n\n1. View Discounts \n2. Add Resources \n3. Remove Resource\n4. View Cart\n5. Checkout"));
+                choice = Integer.parseInt(JOptionPane.showInputDialog(null, "**AWS Cloud Resources**\n\n1. View Pricing \n2. Add Resources \n3. Remove Resource\n4. View Cart\n5. Checkout"));
                 switch(choice){
+                    
                     case 1: //view discounts
-                    JOptionPane.showMessageDialog(null, "Current Discounts:\n\n1) 20% off on all storage purchased over 500GB");
-                    break;
+                        JOptionPane.showMessageDialog(null, "Current Discounts:\n1) 20% off on all storage purchased over 500GB");
+                        break;
 
                     case 2: //add resource or just browse
-                    Add(allResources);
+                    if(Resource.getNumResources()<allResources.length){
+                        Add(allResources);
+                    }else{JOptionPane.showMessageDialog(null, "You can only have a maximum of 10 resources");
+                    }
                         break;
 
                     case 3: //remove
@@ -26,7 +32,7 @@ public class CloudResourceAllocation {
                         break;
 
                     case 4: //view cart, does not show user information
-                    displayCart(allResources);
+                    displayCart(allResources, Customer1);
                         break;
 
                     case 5://exit
@@ -94,6 +100,7 @@ public class CloudResourceAllocation {
             break;
 
             case 1: //free trials
+            JOptionPane.showMessageDialog(null, "Unfortunately, there are no free trials available at the moment.");
             break;
 
             case 2: //virtual servers
@@ -143,7 +150,6 @@ public class CloudResourceAllocation {
         Object[] options = {"Go Back", "100GB", "500GB", "1TB", "Custom"};
         int option = JOptionPane.showOptionDialog(null, "Select the storage size you want to add:", "Add Storage", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[4]);
     
-        double percent=0.5;
         switch (option) {
     
             case 0://go back to previous menu
@@ -151,15 +157,15 @@ public class CloudResourceAllocation {
     
             case 1://100GB
             int size=100;
-                return new Storage("Storage", size*percent, 100);
+                return new Storage("Storage", size*storagePrice, 100);
     
             case 2://500GB
             size=500;
-                return new Storage("Storage", size*percent, 500);
+                return new Storage("Storage", size*storagePrice, 500);
     
             case 3://1TB
             size =1000;
-                return new Storage("Storage", size*percent, 1000);
+                return new Storage("Storage", size*storagePrice, 1000);
     
             case 4://Custom
                 String customSizeString = JOptionPane.showInputDialog(null, "Enter the size (in GB) of the storage you want to add:");
@@ -185,21 +191,21 @@ public class CloudResourceAllocation {
     
             case 1://3 months
             int duration =3;
-            return new MachineLearning("Machine Learning", duration*150, 3);
+            return new MachineLearning("Machine", duration*150, 3);
             
             case 2://6 months
             duration = 6;
-                return new MachineLearning("Machine Learning", duration*150, 6);
+                return new MachineLearning("Machine", duration*150, 6);
     
             case 3://12 months
             duration =12;
-                return new Storage("Machine Learning", duration*150, 12);
+                return new MachineLearning("Machine", duration*150, 12);
     
-            case 4://lifetime ML 
+            case 4://custom ML 
                 String customSizeString = JOptionPane.showInputDialog(null, "How many months would you like access to our Machine Learning tools?");
                 try {
                     int customSize = Integer.parseInt(customSizeString);
-                    return new Storage(customSize + "GB", customSize*150,customSize);
+                    return new MachineLearning("Machine",customSize*150,customSize);
                 } catch (NumberFormatException e) {
                     JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.");
                     return addStorage();
@@ -232,10 +238,10 @@ public class CloudResourceAllocation {
                 return new VirtualServers("Server", size*ratio, 3);
     
             case 4://Custom
-                String customSizeString = JOptionPane.showInputDialog(null, "Enter the size (in GB) of the storage you want to add:");
+                String customSizeString = JOptionPane.showInputDialog(null, "How many virtual servers would you like to purchase for the next year?:");
                 try {
                     int customSize = Integer.parseInt(customSizeString);
-                    return new Storage("Storage", customSize*0.5, customSize);
+                    return new VirtualServers("Virtual Server", customSize*ratio,customSize);
                 } catch (NumberFormatException e) {
                     JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.");
                     return addStorage();
@@ -250,22 +256,32 @@ public class CloudResourceAllocation {
         String output = "    Type  |  Final Price  |  Savings  |  Initial Price  |  Additional\n";
 
 
-        int x=1;
-        for (int i=0;i<Resource.getNumResources();i++){
-            output+=x+")  "+allResources[i].toString();
-            x++;
-        }
-        int removeResource=  Integer.parseInt(JOptionPane.showInputDialog(null, "Cloud Resource in your cart:\n\n"+output+"\nPlease select one you would like to remove."))-1;
-        for (int i = removeResource; i < Resource.getNumResources() - 1; i++) {
-            allResources[i] = allResources[i+1]; // Shift all elements after the removed one to the left
+        if(Resource.getNumResources()>0){
+            int x=1;
+            for (int i=0;i<Resource.getNumResources();i++){
+               output+=x+")  "+allResources[i].toString()+"\n";
+                x++;
+            }
+
+            int removeResource=Integer.parseInt(JOptionPane.showInputDialog(null, "Cloud Resource in your cart:\n\n"+output+"\nPlease select one you would like to remove."))-1;
+            if (removeResource < 0 || removeResource >= Resource.getNumResources()) {
+                JOptionPane.showMessageDialog(null, "Invalid input. Please enter a number 1 through " + Resource.getNumResources() + ".");
+                return;
+            }
+            for (int i = removeResource; i < Resource.getNumResources() - 1; i++) {
+                allResources[i] = allResources[i+1]; // Shift all elements after the removed one to the left
+            }
+
+            allResources[Resource.getNumResources() - 1] = null;
+            Resource.numResources-=1;
+        }else{
+            JOptionPane.showMessageDialog(null, "You have not added any resources yet.");
         }
 
-        allResources[Resource.getNumResources() - 1] = null;
-        Resource.numResources-=1;
-        
+
     }
    
-    public static void displayCart(Resource allResources[]){
+    public static void displayCart(Resource allResources[], Customer Customer1){
         if(allResources[0]!=null){
             int numStorage=0;
             int numServers=0;
@@ -284,39 +300,48 @@ public class CloudResourceAllocation {
                     if(allResources[i]instanceof VirtualServers){
                         numServers++;
                     } 
-                    allResources[i].toString();
                 }
             }
             output+="\nStorage: "+numStorage+"\nMachine Learning: "+numML+"\nVirtual Server: "+numServers;
             output+="\n\nType  |  Final Price  |  Savings  |  Initial Price  |  Additional\n";
             for(int i=0; i<Resource.getNumResources();i++){
-                output+=allResources[i].toString();
+                output+=allResources[i].toString()+"\n";
             }
-            output+="\n\nSubtotal: ";
+            output+="\n\nSubtotal: $"+Customer1.getSubtotal(allResources);
 
             JOptionPane.showMessageDialog(null, output);
             
         }else{JOptionPane.showMessageDialog(null, "You have not added any resources yet.");}
     }
 
-    public static void checkout(Customer Customer1, Resource allResources[]){if(allResources[0]!=null){
-        String output = "Your Information:\nName: "+Customer1.getFullName()+"\nEmail:"+Customer1.getEmail()+"\n\nType  |  Final Price  |  Savings  |  Initial Price  |  Additional\n";
-        for (int i=0; i<Resource.getNumResources(); i++){
-            if (allResources[i] != null) {
-                if(allResources[i]instanceof Storage){
-                    allResources[i].toString();
+    public static void checkout(Customer Customer1, Resource allResources[]){
+        if(allResources[0]!=null){
+            int numStorage=0;
+            int numServers=0;
+            int numML=0;
+
+            String output = "Your Information:\nName: "+Customer1.getFullName()+"\nEmail: "+Customer1.getEmail();
+            for (int i=0; i<Resource.getNumResources(); i++){
+                if (allResources[i] != null) {
+                    if(allResources[i]instanceof Storage){
+                        numStorage++;
+                    }
+                    if(allResources[i]instanceof MachineLearning){
+                        numML++;
+                    }
+                    if(allResources[i]instanceof VirtualServers){
+                        numServers++;
+                    }
                 }
-                if(allResources[i]instanceof MachineLearning){
-                    
-                }
-                if(allResources[i]instanceof VirtualServers){
-                    
-                }
-                output += allResources[i].getName() + ": $" + allResources[i].getPrice() + "\n";
             }
-        }
-        output+="\nSubtotal:";
-        JOptionPane.showMessageDialog(null, output);
+            output+="\n\nNumber of Cloud Resources: "+Resource.getNumResources()+"\nStorage: "+numStorage+"\nMachine Learning: "+numML+"\nVirtual Server: "+numServers;
+            output+= "\n\nYour Resources:\nType  |  Final Price  |  Savings  |  Initial Price  |  Additional\n";
+            for (int i=0;i<Resource.getNumResources();i++){
+                output+=allResources[i].toString()+"\n";
+            }
+            output+="\n\nTotal: $"+Customer1.getSubtotal(allResources);
+
+            JOptionPane.showMessageDialog(null, output);
     }else{JOptionPane.showMessageDialog(null, "You have not added any resources yet.");}
 }
 }
