@@ -8,26 +8,27 @@ public class CloudResourceAllocation {
         final int maxResources = 10;
         Resource allResources[] = new Resource[maxResources];
         Customer Customer1 = new Customer(null, null, null, allResources);
-        registration(Customer1);
+        registration(Customer1); //This runs the registration method on Customer1, which was null prior to this method.
+
         int choice=0;
 
-        do{   
+        do{  //the do while loop pulls up an Input Dialog which works as a switch case. The number they enter correspodns to the method that will be called
             try{
                 choice = Integer.parseInt(JOptionPane.showInputDialog(null, "**AWS Cloud Resources**\n\n1. View Pricing \n2. Add Resources \n3. Remove Resource\n4. View Cart\n5. Checkout"));
                 switch(choice){
                     
-                    case 1: //view discounts
+                    case 1: //pulls up the current available discounts
                         JOptionPane.showMessageDialog(null, "Current Discounts:\n1) 20% off on all storage purchased over 500GB");
                         break;
 
-                    case 2: //add resource or just browse
+                    case 2: //allows the user to add resources or just browse through them. I created an array of Objects to create custom button names and used a switch case for the button they press.
                     if(Resource.getNumResources()<allResources.length){
                         Add(allResources);
                     }else{JOptionPane.showMessageDialog(null, "You can only have a maximum of 10 resources");
                     }
                         break;
 
-                    case 3: //remove
+                    case 3: //remove resoures
                     removeItem(allResources);
                         break;
 
@@ -35,12 +36,11 @@ public class CloudResourceAllocation {
                     displayCart(allResources, Customer1);
                         break;
 
-                    case 5://exit
+                    case 5://this is the "checkout" button. Shows user information and cart. Has validation for 0 items added.
                     checkout(Customer1, allResources);
                     if(allResources[0]==null){
                         choice=6;
                     }
-                    
                     break;
                 }
             }catch(NumberFormatException e){
@@ -49,7 +49,7 @@ public class CloudResourceAllocation {
         }while (choice!=5);    
     }
 
-    public static Customer registration(Customer Customer){
+    public static Customer registration(Customer Customer){ //registers the customer and informs them about our program
         boolean done;
         do{
             done = false;
@@ -88,8 +88,8 @@ public class CloudResourceAllocation {
         return Customer;
     }
 
-    public static void Add(Resource allResources[]){
-
+    public static void Add(Resource allResources[]){ 
+ 
         Object[] options = {"Go Back", "Free Trials", "Virtual Servers", "Machine Learning", "Storage"};
         int option = JOptionPane.showOptionDialog(null, "Which cloud resource would you like to look at?\n\n"
         +" \nVirtual Servers: Create multiple isolated virtual machines on a single physical server\nFree Trials: View our other free trials!","AWS Resource Allocation", JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,options,options[4]);
@@ -104,7 +104,6 @@ public class CloudResourceAllocation {
             break;
 
             case 2: //virtual servers
-
             Resource newServer = addServer();
             if(newServer!=null){
                 for(int i=0;i<Resource.getNumResources();i++){
@@ -114,7 +113,6 @@ public class CloudResourceAllocation {
                     }
                 }
             }
-            
             break;
 
             case 3://machine learning
@@ -208,7 +206,7 @@ public class CloudResourceAllocation {
                     return new MachineLearning("Machine",customSize*150,customSize);
                 } catch (NumberFormatException e) {
                     JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.");
-                    return addStorage();
+                    return addML();
                 }
         }
         return null;
@@ -225,15 +223,15 @@ public class CloudResourceAllocation {
             case 0://go back to previous menu
                 return null;
     
-            case 1://1
+            case 1:
             int size=1;
                 return new VirtualServers("Server", size*ratio, 1);
     
-            case 2://52
+            case 2:
             size=2;
                 return new VirtualServers("Server", size*ratio, 2);
     
-            case 3://3
+            case 3:
             size =3;
                 return new VirtualServers("Server", size*ratio, 3);
     
@@ -244,7 +242,7 @@ public class CloudResourceAllocation {
                     return new VirtualServers("Virtual Server", customSize*ratio,customSize);
                 } catch (NumberFormatException e) {
                     JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.");
-                    return addStorage();
+                    return addServer();
                 }
     
         }
