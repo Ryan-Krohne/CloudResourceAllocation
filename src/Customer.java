@@ -34,9 +34,6 @@ public class Customer {
         return password;
     }
    
-   
-   
-   
     public void setPassword(String password) {
     boolean isDigit = false;
     boolean isUpper = false;
@@ -59,7 +56,7 @@ public class Customer {
         if (Character.isLowerCase(c)) {
             isLower = true;
         }
-        if (!Character.isDigit(c) && !Character.isLetter(c)) {
+        if (!Character.isLetterOrDigit(c) && !Character.isWhitespace(c)) {
             specialChar = true;
         }
     }
@@ -78,7 +75,7 @@ public class Customer {
     }
 
     if (!errorMessages.isEmpty()) {
-    StringBuilder errorMessage = new StringBuilder("Your password is missing the following:\n\n");
+    StringBuilder errorMessage = new StringBuilder("Your password is missing the following:\n");
     for (String error : errorMessages) {
         errorMessage.append("- ").append(error).append("\n");
     }
