@@ -76,7 +76,7 @@ public class CloudResourceAllocation {
         do{
             done = false;
             try{
-                String password = JOptionPane.showInputDialog(null, "Please create a password:\n* Between 8 and 16 characters\n* Atleast one digit\n* Atleast one uppercase\n* Atleast one lowercase\n* Atleast one special character\n\n\nCreate your password:");      
+                String password = JOptionPane.showInputDialog(null, "Please create a password:\n\n* Between 8 and 16 characters\n* Atleast one digit\n* Atleast one uppercase\n* Atleast one lowercase\n* Atleast one special character\n\n\nCreate your password:");      
                 Customer.setPassword(password);
                 done = true;
             }catch(IllegalArgumentException e){

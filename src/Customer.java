@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Customer {
     
@@ -36,45 +38,57 @@ public class Customer {
    
    
     public void setPassword(String password) {
-        boolean isDigit = false;
-        boolean isUpper = false;
-        boolean isLower = false;
-        boolean specialChar = false;
+    boolean isDigit = false;
+    boolean isUpper = false;
+    boolean isLower = false;
+    boolean specialChar = false;
+    List<String> errorMessages = new ArrayList<>();
 
+    if (password.length() < 8 || password.length() > 16) {
+        errorMessages.add("Between 8-16 characters");
+    }
 
-        if(password.length()<8 || password.length()>16){
-            throw new IllegalArgumentException("Password must be between 8-16 characters.");
+    for (int i = 0; i < password.length(); i++) {
+        char c = password.charAt(i);
+        if (Character.isDigit(c)) {
+            isDigit = true;
         }
-        for(int i = 0;i<password.length();i++){
-            if(Character.isDigit(password.charAt(i))){
-                isDigit = true;
-            }
-            if(Character.isUpperCase(password.charAt(i))){
-                isUpper = true;
-            }
-            if(Character.isLowerCase(password.charAt(i))){
-                isLower = true;
-            }
-            if(!Character.isDigit(password.charAt(i)) && !Character.isLetter(password.charAt(i))){
-                specialChar = true;
-            }
-            if(isDigit && isUpper && isLower && specialChar){
-                this.password = password;
-            }    
+        if (Character.isUpperCase(c)) {
+            isUpper = true;
         }
-        if(!isDigit){
-            throw new IllegalArgumentException("Password must have at least 1 digit.");
+        if (Character.isLowerCase(c)) {
+            isLower = true;
         }
-        if(!isUpper){
-            throw new IllegalArgumentException("Password must have at least 1 uppercase letter.");
-        }
-        if(!isLower){
-            throw new IllegalArgumentException("Password must have at least 1 lowercase letter.");
-        }
-        if(!specialChar){
-            throw new IllegalArgumentException("Password must have at least 1 special character.");
+        if (!Character.isDigit(c) && !Character.isLetter(c)) {
+            specialChar = true;
         }
     }
+
+    if (!isDigit) {
+        errorMessages.add("One or more digits");
+    }
+    if (!isUpper) {
+        errorMessages.add("One or more uppercase characters");
+    }
+    if (!isLower) {
+        errorMessages.add("One of more lowercase characters");
+    }
+    if (!specialChar) {
+        errorMessages.add("One or more speical characters");
+    }
+
+    if (!errorMessages.isEmpty()) {
+    StringBuilder errorMessage = new StringBuilder("Your password is missing the following:\n\n");
+    for (String error : errorMessages) {
+        errorMessage.append("- ").append(error).append("\n");
+    }
+    throw new IllegalArgumentException(errorMessage.toString());
+}
+
+
+    this.password = password;
+}
+
 
 
 
