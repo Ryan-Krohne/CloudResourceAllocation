@@ -14,7 +14,7 @@ public class Customer {
     }
     public void setFullName(String fullName) {
         int count = 0;
-        if(fullName.equals("") || fullName==null){
+        if(fullName.trim().equals("") || fullName==null){
             throw new IllegalArgumentException("Name must be provided.");
         }
         for(int i=0; i<fullName.length();i++){
