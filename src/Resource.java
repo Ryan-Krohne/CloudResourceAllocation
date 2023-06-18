@@ -34,7 +34,7 @@ public abstract class Resource {
 
 
     public String toString() {
-        return name+"    $"+calculateFees()+"    $"+savings()+"    $"+price;
+        return name+"    $"+calculateFees()+"       $"+savings()+"          $"+price+"    ";
     }
 
 }
