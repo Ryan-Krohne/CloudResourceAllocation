@@ -1,7 +1,6 @@
 ## CloudResourceAllocation
 
-AWS Cloud Resource Allocation is a Java program designed to help users allocate cloud resources on AWS. Users can create an account, view discounts, add resources, remove resources, view their cart, and checkout. The program is designed with modularity in mind, making it easy to maintain and extend.
-
+AWS Cloud Resource Allocation is a Java program designed to help users allocate cloud resources on AWS. Users can create an account, view discounts, add resources, remove resources, view their cart, and checkout. The program was made in an Object Oriented Fashion, and displays my understanding of modular style programming.
 
 <h2 align="center"> Demo April June 18th 2023 </h2>
 
