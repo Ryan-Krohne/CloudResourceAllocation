@@ -62,7 +62,7 @@ public class Customer {
     }
 
     if (!isDigit) {
-        errorMessages.add("One or more digits");
+        errorMessages.add("One or more numbers");
     }
     if (!isUpper) {
         errorMessages.add("One or more uppercase characters");
@@ -71,7 +71,7 @@ public class Customer {
         errorMessages.add("One of more lowercase characters");
     }
     if (!specialChar) {
-        errorMessages.add("One or more speical characters");
+        errorMessages.add("One or more special characters");
     }
 
     if (!errorMessages.isEmpty()) {
